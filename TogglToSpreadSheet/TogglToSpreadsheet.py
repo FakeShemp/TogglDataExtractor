@@ -28,6 +28,7 @@ def write_to_sheet(values, estimatedTime, noProjectTime, noPlannedTime):
     client_email = 'account-1@toggltospreadsheet.iam.gserviceaccount.com'
     private_key = 'nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCV1KZiUni31qeq\nSAnwnN8PfAEiyQ0X9V9Qwye8HwRJQQ9J5FTfghWfFuAaGoGY86h/bTFpsEum3baG\n8peDU2u1h3SFHsJGr0crVjE66M5yAbPyzTza11vvrdnk/sKeDk2rwvjjmsSULI6q\nTJPeykcnKasPT+p2F/FPNkNsqupSJxENWWWak8Qi3Fx6kkFvhRJhjJeG/4wgjT02\nBeWyi1acjG4bh3uAUpnOPphO3Tbqn+6H6SUjssGDM8bx69UYs+mpgCUtGvV2Vh9U\n3FKuaFW5VwIEj6oetm9HpWdZPhMdTZ2ji8C1hFXD1PbetNLC9pWw2tIK39UN+0DO\nJIX4Yim5AgMBAAECggEADbG/+2CaVAM0k+W9stZDtQCagflqTvRIX/NWYGVdWOyv\nXwuVjlAvdbj7hqdBjR9IGU17pLNOVtQQ6MinfINVZuQYjEpBa4B9usJIAaBhrh3l\nup1zoHTqnD+BmOKIGzYndzl80iDFMt3XtE0HfudyFWxDjES7o0uQ7LKC+x2sCRIQ\n2Vt4PIUYCK10/eiHqV2MSdtKY3+6GvTelNSs7d8N0563B8CNdej/HU1/oEUzwXEo\n5mXZxUnnr9Jgt4NRhacaJR0E2NuxbQK7IYagLqufW3vK43FJUTRiBv8Xtl2miUWl\nGiktQDI8aVsFNqNUHhd1qrm3EZ6lYmGeyKVtzlp+AQKBgQDiZpxBe5WQRyE90dO7\nbraxJGeX1JqiE/RFYhjyWOebIsjnR4Suv/2dZR38rrWpWjRck5RqhsALRAuOCcTA\n6p++bNph/f3RlMICD+pqh/9rwuweqqETvaVZw/zsIfiftthQ7r9j/q8ebnSGVpHr\nybBovB5+TyHiJhmIgrdKMUlw2QKBgQCpa1HNBYzApY+gcEPiUkxizYf4JChULlGd\nlAV+DdLBxaSkYgEJ2MIuJQ/8ZOJm5swOxJp4UhXM/rSi0ObXnyL3AIIe56IK+kY9\nZbFMsxx/U7U8cyPObihH4tSOeJoeZdolI6YCON0Nz0obJ/PxmPYCd3RdgYuPifyC\nbvm8g3jz4QKBgGjpRaUugHsQCv5bmjLzteLWTM7VrSZH+tyf/ZFn00NXViOeR4S2\n4O4rqj6qMvIcI8F2fcLzWFCgIn6aVjtTPdz/Eh9wlEqnFVPhTi45gQnNlJ8NUIEW\nU2YKZMyDXXOdRhYS3EuY/EsswgByY0IQ/xc5fSPoxXnHT/OrJwZRWofZAoGAceTd\n9zCV8STcK4WNfWbKR1nY4K6eFgmVgJP0JUvxtabDCmeAPzhjQlZUKt8/fOIHqJ3v\nIpg8Y7WPhi1eIvKutNK4p0IdI7gg5EGrMd7vd4G0w1C8b5iKp9kMAEN/iJP8VR9k\nCPZlVVVXgm4XhwHH0Nyxc/MU+YhQIvesGFliRMECgYAhACR6D7rJ8VvBV8GKWWJr\nxholsBaE101nYbUQrZLRjBkOdw72PAhieHZivbkqf/ZjWyH1HmRdJ5X8P5a8THcp\n32ndHguve8MgAKOyYfkCfHhqnXijLSf4RfkaoCR8ki8Eq1diIi36DItVo6FvRzPs\nqmfEdiKscq6kTFzRBtMPpA=='
     
+    # Change the path, otherwise the the json_key will not be found and writing to the Sheet will fail.
     json_key = json.load(open('TogglToSpreadSheet-97a0ed27dce5.json'))
     scope = ['https://spreadsheets.google.com/feeds']
 
@@ -115,26 +116,18 @@ def get_totaltime_data():
 
     timeleft = totalTime
     hours = totalTime / 3600000
-    timeleft -=  hours * 3600000
-    min = timeleft / 60000
-    timeleft -= min * 60000 
-    sec = timeleft / 1000
     estimatedTimeInHours = estimatedTime / 3600
     noProjectTime = allNumbers2[0] / 3600000
     
-    str = 'Total Time: ' + repr(hours) +':' + repr(min) + ':' + repr(sec)
+    str = 'Total Time: ' + repr(hours)
     print str
-    result = repr(hours) + ':' + repr(min) +':' + repr(sec)
+    result = hours;
 
     # Not planned Time
     totalTime = allNumbers[1]
     timeleft = totalTime
     hours = totalTime / 3600000
-    timeleft -=  hours * 3600000
-    min = timeleft / 60000
-    timeleft -= min * 60000 
-    sec = timeleft / 1000
-    noPlannedTime = repr(hours) + ':' + repr(min) +':' + repr(sec)
+    noPlannedTime = hours
     #result = []
     #result.append(hours);
     #result.append(min);
