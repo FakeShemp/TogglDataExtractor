@@ -38,11 +38,12 @@ def write_to_sheet(values, estimatedTime, noProjectTime, noPlannedTime):
     worksheet = sh.get_worksheet(0)
 
     currentDate = time.strftime("%Y-%m-%d")
-    results = [currentDate,values]
+    results = [currentDate]
     worksheet.insert_row(results, 2)
 
-    worksheet.update_acell("D2", noPlannedTime)
-    worksheet.update_acell("F2", estimatedTime)
+    worksheet.update_acell("C2", values)
+    worksheet.update_acell("E2", noPlannedTime)
+    worksheet.update_acell("G2", estimatedTime)
     return;
 
 def get_totaltime_data():
