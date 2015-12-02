@@ -35,7 +35,7 @@ def write_to_sheet(values, estimatedTime, noProjectTime, noPlannedTime):
     credentials = SignedJwtAssertionCredentials(json_key['client_email'], json_key['private_key'].encode(), scope)
     gc = gspread.authorize(credentials)
     sh = gc.open_by_url('https://docs.google.com/spreadsheets/d/1P8HFfktwSAF0rgi9rxpNvdMdR0GYuo845qAGikeJUh8/edit#gid=0')
-    worksheet = sh.get_worksheet(0)
+    worksheet = sh.get_worksheet(1)
 
     currentDate = time.strftime("%Y-%m-%d")
     results = [currentDate]
