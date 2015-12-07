@@ -51,35 +51,15 @@ def get_totaltime_data():
     _workspace_id = 1190663
     print 'Sending Request...'
 
-    sprintDayList = []
-
+    # Change/Rework next year/sprint
     sprintDay = date.today()
-
     sprintDay = sprintDay.replace(day=7, month=12,year=2015)
-    sprintDayList.append(sprintDay)
 
-    sprintDay = sprintDay.replace(day=4,month=01,year=2016)
-    sprintDayList.append(sprintDay)
-    for x in range(0,3):
-        sprintDay = sprintDay + timedelta(days=14)
-        sprintDayList.append(sprintDay)
-    
-    counter = 0
-    today = date.today()
-    sinceDate = 0
-    for x in sprintDayList:
-        print counter
-        if today < sprintDayList[counter]:
-            sinceDate = sprintDayList[counter] - timedelta(days=14)
-            break
-        counter = counter + 1
-
-    print sinceDate
     #Project
-    r = requests.get('https://toggl.com/reports/api/v2/summary', auth=(api_token, 'api_token'), params={'workspace_id': _workspace_id, 'since' : sinceDate, 'user_agent': 'api_test'})
+    r = requests.get('https://toggl.com/reports/api/v2/summary', auth=(api_token, 'api_token'), params={'workspace_id': _workspace_id, 'since' : sprintDay, 'user_agent': 'api_test'})
     
     # No project
-    r2 = requests.get('https://toggl.com/reports/api/v2/summary', auth=(api_token, 'api_token'), params={'workspace_id': _workspace_id, 'since' : sinceDate, 'project_ids' : '0', 'user_agent': 'api_test'})
+    r2 = requests.get('https://toggl.com/reports/api/v2/summary', auth=(api_token, 'api_token'), params={'workspace_id': _workspace_id, 'since' : sprintDay, 'project_ids' : '0', 'user_agent': 'api_test'})
     if r.status_code != 200:
         print 'Request Failed. Check your API Token'
         return;
@@ -111,14 +91,21 @@ def get_totaltime_data():
     allNumbers = map(int, re.findall('\d+', wholeText))
     allNumbers2 = map(int, re.findall('\d+', wholeText2))
 
-    totalTime = allNumbers[0] - allNumbers[1] - allNumbers2[0]
+    try:
+        totalTime = allNumbers[0]
+    except:
+        totalTime = 0
+        
     if totalTime < 0:
         totalTime = 1
 
     timeleft = totalTime
     hours = totalTime / 3600000
     estimatedTimeInHours = estimatedTime / 3600
-    noProjectTime = allNumbers2[0] / 3600000
+    try:
+        noProjectTime = allNumbers2[0] / 3600000
+    except:
+        noProjectTime = 0
     
     str = 'Total Time: ' + repr(hours)
     print str
@@ -133,7 +120,9 @@ def get_totaltime_data():
     #result.append(hours);
     #result.append(min);
     #result.append(sec);
-    
+    result = result - noPlannedTime
+    if result < 0:
+        result = 0
     print 'Writing to Sheet...'
     write_to_sheet(result, estimatedTimeInHours, noProjectTime, noPlannedTime)
     return;
