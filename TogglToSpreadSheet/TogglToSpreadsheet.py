@@ -83,7 +83,8 @@ def get_totaltime_data():
         text = projectText.replace('null','0')
         finalText = text.replace('0.0', '0')
         timeMap = map(int, re.findall(r'\d+', finalText))
-        estimatedTime = estimatedTime + timeMap[6]
+        if timeMap != []:
+			estimatedTime = estimatedTime + timeMap[6]
         counter+= 1
 
     wholeText = r.text
