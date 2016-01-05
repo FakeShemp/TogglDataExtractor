@@ -53,7 +53,7 @@ def get_totaltime_data():
 
     # Change/Rework next year/sprint
     sprintDay = date.today()
-    sprintDay = sprintDay.replace(day=7, month=12,year=2015)
+    sprintDay = sprintDay.replace(day=4, month=1,year=2016)
 
     #Project
     r = requests.get('https://toggl.com/reports/api/v2/summary', auth=(api_token, 'api_token'), params={'workspace_id': _workspace_id, 'since' : sprintDay, 'user_agent': 'api_test'})
